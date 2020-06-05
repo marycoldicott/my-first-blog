@@ -5,8 +5,11 @@ from .forms import PostForm
 
 # Create your views here.
 
+def blog_header(request):
+	return render(request, 'blog_header.html')
+
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 def post_detail(request, pk):
@@ -19,7 +22,6 @@ def post_new(request):
 		if form.is_valid():
 			post = form.save(commit = False)
 			post.author = request.user
-			post.published_date = timezone.now()
 			post.save()
 			return redirect('post_detail', pk=post.pk)
 	else:
@@ -33,9 +35,26 @@ def post_edit(request, pk):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date = timezone.now()
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+def post_publish(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    post.publish()
+    return redirect('post_detail', pk=pk)
+
+def post_draft_list(request):
+    posts = Post.objects.filter(published_date__isnull=True).order_by('-created_date')
+    return render(request, 'blog/post_draft_list.html', {'posts': posts})
+
+def post_delete(request, pk):
+	post = get_object_or_404(Post, pk=pk)
+	post.delete()
+	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+	return render(request, 'blog/post_list.html', {'posts': posts})
+
+def contact(request):
+	return render(request, 'blog/contact.html')

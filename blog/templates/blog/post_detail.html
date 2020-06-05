@@ -1,16 +1,36 @@
-{% extends 'blog/base.html' %}
+{% extends 'blog/blog_header.html' %}
+{% load static %}
 
 {% block content %}
-    <div class="post">
+	<head>
+		<link rel="stylesheet" href="{% static 'css/blog.css' %}">
+	</head>
+    <div class="post">   	
         {% if post.published_date %}
-            <div class="date">
-                {{ post.published_date }}
-            </div>
-        {% endif %}
-        {% if user.is_authenticated %}
-        	<a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-        {% endif %}
+    		<div class="date">
+        		{{ post.published_date }}
+    		</div>
+    	{% else %}
+    		<div class="date">
+        		{{ post.created_date }}
+    		</div>
+    	{% endif %}	    
         <h2>{{ post.title }}</h2>
         <p>{{ post.text|linebreaksbr }}</p>
+        {% if user.is_authenticated %}
+        	<div class='edit-buttons'>
+        		<ul>
+        			<li><a class="custom-button" href="{% url 'post_edit' pk=post.pk %}"><button type="submit" class='custom-button'>Edit</button></a></li>
+        			<li><form action="delete/" method="POST">
+        				{% csrf_token %}
+        				<!--<a href="delete_methode_link" onclick="return confirm('Are you sure you want to Remove?');">Remove</a>-->
+						<button type="submit" class='custom-button'>Delete</button>
+					</form></li>
+					{% if not post.published_date %}
+    					<li><a class="custom-button" href="{% url 'post_publish' pk=post.pk %}"><button type="submit" class='custom-button'>Publish</button></a></li>
+    				{% endif %}
+				</ul>
+			</div>
+        {% endif %}
     </div>
 {% endblock %}
