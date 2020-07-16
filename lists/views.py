@@ -16,6 +16,10 @@ def cv_page(request):
 		area_personal_name = area_personal.item_set.all().filter(item_type="Name").last()
 		area_personal_email = area_personal.item_set.all().filter(item_type="Email").last()
 		area_personal_mobile = area_personal.item_set.all().filter(item_type="Telephone Number").last()
+	else:
+		area_personal_name = None
+		area_personal_email = None
+		area_personal_mobile = None
 
 	area_education = Area.objects.filter(area_type="education")
 	if area_education:
