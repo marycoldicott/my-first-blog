@@ -1,0 +1,59 @@
+{% extends 'cv.html' %}
+{% block experience %}
+	<h3>Work Experience</h3>
+	{% if create %}
+		<form method="POST" action="/cv/experience/create">
+			<input name="type_" value="experience" class='hidden'/>{% csrf_token %}
+			{{ form.as_p}}
+			<button type="submit" class='custom-button'>Submit</button>
+		</form>
+	{% endif %}
+	<form method="POST" action="/cv/experience/add_item">
+		<input name="type_" value="experience" class="hidden"/>{% csrf_token %}
+		<select name="item_type" class="cv-drop-down">
+			<option>Current</option>
+			<option>Previous</option>
+		</select>{% csrf_token %}
+		<br>
+		<br>
+		<label>Role Name
+			<br>
+			<input name="item_text[]" placeholder="Enter name of role" class='medium'/>{% csrf_token %}
+			{{ form.as_p}}
+		</label>
+		<br>
+		<label>Dates Worked
+			<br>
+			<input name="item_text[]" placeholder="Enter dates worked" class='short'/>{% csrf_token %}
+			{{ form.as_p}}
+		</label>
+		<br>
+		<label>Name of Employer
+			<br>
+			<input name="item_text[]" placeholder="Enter name of employer" class='medium'/>{% csrf_token %}
+			{{ form.as_p}}
+		</label>
+		<br>
+		<label>Responsibilities
+			<br>
+			<input name="item_text[]" placeholder="Enter responsibilities" class='long'/>{% csrf_token %}
+			{{ form.as_p}}
+		</label>
+		<br>
+		<label>Other
+			<br>
+			<input name="item_text[]" placeholder="Enter any other relevant details" class='long'/>{% csrf_token %}
+			{{ form.as_p}}
+		</label>
+		<button type="submit" class='custom-button'>Submit</button>		
+	</form>
+	<h4>Previously Entered</h4>
+	<table id="id_area_table">
+		{% for item in area.item_set.all %}
+			<tr>
+				<td class="left-column"><a class="small-a" href="{% url 'detail_experience' pk=item.pk %}"><b>{{ item.item_type }}</b></a></td> 
+				<td>{{ item.text|linebreaksbr }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

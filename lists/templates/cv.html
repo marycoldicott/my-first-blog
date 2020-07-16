@@ -1,0 +1,93 @@
+{% extends 'blog/base.html' %}
+{% block blogheader %}
+	<div class="page-header">
+		<a href="{% url 'cv' %}" class='top-menu'>CV</a>
+	</div>
+	<!--<body>
+		<div class="page-header">
+			{% if user.is_authenticated %}
+				<a href="{% url 'cv_add_photo' %}" class="top-menu">Add <span class="glyphicon glyphicon-plus"></span></a>
+            	<a href="{% url 'post_draft_list' %}" class="top-menu">Edit <span class="glyphicon glyphicon-edit"></span></a>
+			{% endif %}
+		</div>
+	</body>-->
+{% endblock %}
+{% block content %}
+	<div class="cv-content">
+	{% block photo %}
+		<div class='photo'>
+			<a href="{% url 'cv_add_photo' %}">Photo</a>
+			<br>
+			<img src={{ area_photo.item_set.all.last.text }}>
+		</div>
+	{% endblock %}
+	{% block personal %}
+		<div class='personal'>
+			<a href="{% url 'cv_add_personal' %}">Personal</a>
+			<table id="id_area_table">
+				{% if area_personal_name %}
+					<tr>
+						<td class="left-column"><a class="small-a" href="{% url 'detail_personal' pk=area_personal_name.pk %}"><b>{{ area_personal_name.item_type }}</b></a></td>
+						<td>{{ area_personal_name.text }}</td>
+					</tr>
+				{% endif %}
+				{% if area_personal_email %}
+					<tr>
+						<td class="left-column"><a class="small-a" href="{% url 'detail_personal' pk=area_personal_email.pk %}"><b>{{ area_personal_email.item_type }}</b></a></td>
+						<td>{{ area_personal_email.text }}</td>
+					</tr>
+				{% endif %}
+				{% if area_personal_mobile %}
+					<tr>
+						<td class="left-column"><a class="small-a" href="{% url 'detail_personal' pk=area_personal_mobile.pk %}"><b>{{ area_personal_mobile.item_type }}</b></a></td>
+						<td>{{ area_personal_mobile.text }}</td>
+					</tr>
+				{% endif %}
+				<!--{% for item in area_personal.item_set.all %}  
+        			<tr><td>{{ item.item_type }}: {{ item.text }}</td></tr>
+      			{% endfor %}-->
+    		</table>
+		</div>
+	{% endblock %}
+	{% block education %}
+		<div class='education'>
+			<a href="{% url 'cv_add_education' %}">Education</a>
+			<table id="id_area_table">
+				{% for item in area_education.item_set.all %}
+					<tr>
+						<td class="left-column"><a class="small-a" href="{% url 'detail_education' pk=item.pk %}"><b>{{ item.item_type }}</b></a></td> 
+						<td>{{ item.text|linebreaksbr }}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	{% endblock %}
+	{% block experience %}
+		<div class='experience'>
+			<a href="{% url 'cv_add_experience' %}">Work Experience</a>
+			<table id="id_area_table">
+				{% for item in area_experience.item_set.all %}
+					<tr>
+						<td class="left-column"><a class="small-a" href="{% url 'detail_experience' pk=item.pk %}"><b>{{ item.item_type }}</b></a></td>
+						<td>{{ item.text|linebreaksbr }}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	{% endblock %}
+	{% block skills %}
+		<div class='skills'>
+			<a href="{% url 'cv_add_skills' %}">Skills</a>
+			<table id="id_area_table">
+				{% for item in area_skills.item_set.all %}
+					<tr>
+						<td class="left-column"><a class="small-a" href="{% url 'detail_skills' pk=item.pk %}"><b>{{ item.item_type }}</b></a></td> 
+						<td>{{ item.text }}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	{% endblock %}
+	</div>
+{% endblock %}
+

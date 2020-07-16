@@ -1,0 +1,17 @@
+{% extends 'cv.html' %}
+{% block content %}
+	<h2>{{ item.item_type }}</h2>
+	<p>{{ item.text|linebreaksbr }}</p>
+	{% if user.is_authenticated %}
+	<div class='edit-buttons'>
+        <ul>
+        	
+        	<li><form action="delete/" method="POST">
+        		{% csrf_token %}
+        		<!--<a href="delete_methode_link" onclick="return confirm('Are you sure you want to Remove?');">Remove</a>-->
+				<button type="submit" class='custom-button'>Delete</button>
+			</form></li>
+		</ul>
+	</div>
+    {% endif %}
+{% endblock %}

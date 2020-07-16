@@ -1,0 +1,32 @@
+{% extends 'cv.html' %}
+{% block skills %}
+	<h3>Skills</h3>
+	{% if create %}
+		<form method="POST" action="/cv/skills/create">
+			<input name="type_" value="skills" class='hidden'/>{% csrf_token %}
+			{{ form.as_p}}
+			<button type="submit" class='custom-button'>Submit</button>
+		</form>
+	{% endif %}
+	<form method="POST" action="/cv/skills/add_item">
+		<input name="type_" value="skills" class="hidden"/>{% csrf_token %}
+		<select name="item_type" class="cv-drop-down">
+			<option>Technical</option>
+			<option>Personal</option>
+		</select>{% csrf_token %}
+		<br>
+		<br>
+		<input name="item_text[]" placeholder="Describe a skill" class='medium'/>{% csrf_token %}
+		{{ form.as_p}}
+		<button type="submit" class='custom-button'>Submit</button>		
+	</form>
+	<h4>Previously Entered</h4>
+	<table id="id_area_table">
+		{% for item in area.item_set.all %}
+			<tr>
+				<td class="left-column"><a class="small-a" href="{% url 'detail_skills' pk=item.pk %}"><b>{{ item.item_type }}</b></a></td> 
+				<td>{{ item.text|linebreaksbr }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'cv.html' %}
+{% block education %}
+	<h3>Education</h3>
+	{% if create %}
+		<form method="POST" action="/cv/education/create">
+			<input name="type_" value="education" class='hidden'/>{% csrf_token %}
+			{{ form.as_p}}
+			<button type="submit" class='custom-button'>Submit</button>
+		</form>
+	{% endif %}
+	<form method="POST" action="/cv/education/add_item">
+		<input name="type_" value="education" class="hidden"/>{% csrf_token %}
+		<select name="item_type" class="cv-drop-down">
+			<option>School</option>
+			<option>College</option>
+			<option>University</option>
+			<option>Other</option>
+		</select>{% csrf_token %}
+		<br>
+		<br>
+		<label>Years Studied
+			<br>
+			<input name="item_text[]" placeholder="Enter years studied" class='short'/>{% csrf_token %}
+			{{ form.as_p}}
+		</label>
+		<br>
+		<label>Name of Institution
+			<br>
+			<input name="item_text[]" placeholder="Enter name of institution" class='medium'/>{% csrf_token %}
+			{{ form.as_p}}
+		</label>
+		<br>
+		<label>Qualifications Gained
+			<br>
+			<input name="item_text[]" placeholder="Enter qualifications gained" class='long'/>{% csrf_token %}
+			{{ form.as_p}}
+		</label>
+		<br>
+		<label>Other
+			<br>
+			<input name="item_text[]" placeholder="Enter any other relevant details" class='long'/>{% csrf_token %}
+			{{ form.as_p}}
+		</label>
+		<button type="submit" class='custom-button'>Submit</button>		
+	</form>
+	<h4>Previously Entered</h4>
+	<table id="id_area_table">
+		{% for item in area.item_set.all %}
+			<tr>
+				<td class="left-column"><a class="small-a" href="{% url 'detail_education' pk=item.pk %}"><b>{{ item.item_type }}</b></a></td> 
+				<td>{{ item.text|linebreaksbr }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}

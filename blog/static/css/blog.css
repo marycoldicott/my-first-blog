@@ -24,6 +24,7 @@
 .content {
     margin-left: 40px;
     margin-top: 80px;
+    text-orientation: center;
 }
 
 .custom-button {
@@ -103,10 +104,10 @@
 }
 
 h1 {
-	font-family: 'Pacifico', cursive;
+	font-family: 'Pacifico', cursive; !important
 }
 
-h2, h3, h4 {
+h2, h3, h4, a {
     font-family: 'Source Sans Pro', sans-serif;
 }
 
@@ -159,4 +160,92 @@ hr {
 
 .new-post, .contact {
 	margin-top: 40px;
+}
+
+a, h3 {
+	font-size: 28px;
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: black;
+}
+
+img {
+	width: 150px;
+	margin-bottom: 30px;
+	border-radius: 2px;
+	border-color: black;
+	border-width: 20px;
+}
+
+.cv-content {
+	display: block;
+	margin: 0;
+}
+
+table {
+	margin-bottom: 30px;
+}
+
+tr {
+	height: 30px;
+}
+
+td {
+	font-size: 14px;
+	padding: 5px;
+	font-family: 'Source Sans Pro', sans-serif;
+	vertical-align: top;
+}
+
+.left-column {
+	width: 140px;
+}
+
+label {
+	width: 100%;
+	margin-bottom: 10px;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: normal !important;
+}
+
+.short {
+	width: 150px;
+}
+
+.medium {
+	width: 300px;
+}
+
+.long {
+	width: 500px;
+	height: 100px;
+}
+
+input {
+	font-family: 'Source Sans Pro', sans-serif;
+	text-decoration: none;
+}
+
+input:placeholder {
+	vertical-align: top;
+}
+
+.cv-drop-down {
+	font-family: 'Source Sans Pro', sans-serif;
+	height: 30px;
+	width: 150px;
+	border-radius: 2px;
+	border-width: 0.5px;
+}
+
+.small-a {
+	font-size: 14px;
+}
+
+.header {
+	font-family: 'Pacifico', cursive; !important
 }

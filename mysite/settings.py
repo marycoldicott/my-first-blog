@@ -25,7 +25,7 @@ SECRET_KEY = '74wm37=pktcb(6_!y2a^59-c@r@i$5&b25-t4(#-mhs0blh7&6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', 'localhost']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
+    'lists',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,10 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            "blog/templates/blog/",
+            "cv/templates/",
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

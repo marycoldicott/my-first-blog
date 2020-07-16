@@ -1,0 +1,21 @@
+{% extends 'cv.html' %}
+{% block photo %}
+	<h3>Photo</h3>
+	{% if create %}
+		<form method="POST" action="/cv/photo/create">
+			<input name="type_" value="photo" class='hidden'/>{% csrf_token %}
+			{{ form.as_p}}
+			<button type="submit" class='custom-button'>Submit</button>		
+		</form>
+	{% else %}
+		<h4>Current Photo:</h4>
+		<img src={{ area.item_set.all.last.text }}>
+	{% endif %}
+	<form method="POST" action="/cv/photo/add_item">
+		<input name="type_" value="photo" class="hidden"/>{% csrf_token %}
+		<input name="item_type" value="url" class="hidden"/>{% csrf_token %}
+		<input name="item_text[]" placeholder="Enter a photo URL" class='post-form'/>{% csrf_token %}
+		{{ form.as_p}}
+		<button type="submit" class='custom-button'>Submit</button>		
+	</form>
+{% endblock %}

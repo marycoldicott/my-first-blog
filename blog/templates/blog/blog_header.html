@@ -2,9 +2,9 @@
 
 {% block blogheader %}
 <div class="page-header">
-            {% if user.is_authenticated %}
-                <a href="{% url 'post_new' %}" class="top-menu">New <span class="glyphicon glyphicon-plus"></span></a>
-                <a href="{% url 'post_draft_list' %}" class="top-menu">Drafts <span class="glyphicon glyphicon-edit"></span></a>
-            {% endif %}    
-        </div>
+    {% if user.is_authenticated %}
+        <a href="{% url 'post_new' %}" class="top-menu">New <span class="glyphicon glyphicon-plus"></span></a>
+        <a href="{% url 'post_draft_list' %}" class="top-menu">Drafts <span class="glyphicon glyphicon-edit"></span></a>
+    {% endif %}    
+</div>
 {% endblock %}
