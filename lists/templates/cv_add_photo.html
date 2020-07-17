@@ -1,6 +1,6 @@
 {% extends 'cv.html' %}
 {% block photo %}
-	<h3>Photo</h3>
+	<h3 class="cursive">Photo</h3>
 	{% if create %}
 		<form method="POST" action="/cv/photo/create">
 			<input name="type_" value="photo" class='hidden'/>{% csrf_token %}

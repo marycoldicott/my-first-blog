@@ -4,8 +4,7 @@
 	<p>{{ item.text|linebreaksbr }}</p>
 	{% if user.is_authenticated %}
 	<div class='edit-buttons'>
-        <ul>
-        	
+        <ul> 	
         	<li><form action="delete/" method="POST">
         		{% csrf_token %}
         		<!--<a href="delete_methode_link" onclick="return confirm('Are you sure you want to Remove?');">Remove</a>-->

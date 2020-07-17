@@ -1,6 +1,6 @@
 {% extends 'cv.html' %}
 {% block personal %}
-	<h3>Personal Details</h3>
+	<h3 class="cursive">Personal Details</h3>
 	{% if create %}
 		<form method="POST" action="/cv/personal/create">
 			<input name="type_" value="personal" class='hidden'/>{% csrf_token %}

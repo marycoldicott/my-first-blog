@@ -20,7 +20,7 @@
         {% if user.is_authenticated %}
         	<div class='edit-buttons'>
         		<ul>
-        			<li><a class="custom-button" href="{% url 'post_edit' pk=post.pk %}"><button type="submit" class='custom-button'>Edit</button></a></li>
+        			<li><a class="small-a" href="{% url 'post_edit' pk=post.pk %}"><button type="submit" class='custom-button'>Edit</button></a></li>
         			<li><form action="delete/" method="POST">
         				{% csrf_token %}
         				<!--<a href="delete_methode_link" onclick="return confirm('Are you sure you want to Remove?');">Remove</a>-->
