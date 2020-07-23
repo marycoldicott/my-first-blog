@@ -245,7 +245,9 @@ def edit_skills(request, pk):
 
 def new_area(request):
 	area = Area.objects.create(area_type=request.POST.get('type_', ""))
+	name = request.POST.get("type_", "")
 	#Item.objects.create(text=request.POST['item_text'], list=area)
+	#url = f('/cv/' + name)
 	return redirect(f'/cv/')
 
 def add_item(request):

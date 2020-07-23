@@ -21,7 +21,7 @@ class CVPageTest(TestCase):
 		found = resolve('/cv/photo')
 		self.assertEqual(found.func, cv_add_photo)
 
-class NewItemTest(TestCase):
+class NewItemAreaTest(TestCase):
 
 	def test_can_create_a_new_area(self):
 		self.client.post(
@@ -49,13 +49,24 @@ class NewItemTest(TestCase):
 
 		self.client.post(
 			f'/cv/photo/add_item',
-			{'item_text': 'A new item for an existing list', 'type_': 'photo'},
+			{'item_text[]': 'A photo url', 'type_': 'photo', 'item_type': 'url'},
 		)
 
 		self.assertEqual(Item.objects.count(), 1)
 		new_item = Item.objects.first()
-		self.assertEqual(new_item.text, 'A new item for an existing list')
+		self.assertEqual(new_item.text, 'A photo url\n')
 		self.assertEqual(new_item.area, correct_list)
+
+	def test_redirects_to_list_view(self):
+		other_area = Area.objects.create(area_type="experience")
+		correct_area = Area.objects.create(area_type="photo")
+
+		response = self.client.post(
+			f'/cv/photo/add_item',
+			{'item_text': 'A photo url', 'type_': 'photo', 'item_type': 'url'}
+		)
+
+		self.assertRedirects(response, f'/cv/')
 
 class CVAddPageTest(TestCase):
 
@@ -92,5 +103,48 @@ class CVAddPageTest(TestCase):
 		self.assertEqual(first_saved_item.area.area_type, 'photo')
 		self.assertEqual(second_saved_item.text, 'Item the second')
 		self.assertEqual(second_saved_item.area, area_)
-		self.assertEqual(second_saved_item.area.area_type, 'photo')	
+		self.assertEqual(second_saved_item.area.area_type, 'photo')
+
+class CVDetail(TestCase):
+
+	def test_detail_shows_correct_item(self):
+		area = Area.objects.create(area_type="personal")
+
+		self.client.post(
+			f'/cv/personal/add_item',
+			{'item_text[]': 'Mary', "type_": "personal", "item_type": 'Name'}
+		)
+
+		self.assertEqual(Item.objects.count(), 1)
+
+		self.client.post(
+			f'/cv/personal/add_item',
+			{'item_text[]': 'mary.coldicott@gmail.com', "type_": "personal", "item_type": 'Email'}
+		)
+
+		self.assertEqual(Item.objects.count(), 2)
+
+		item = Item.objects.first()
+		pk = item.pk
+
+
+class DeleteItemTest(TestCase):
+
+	def test_deleting_personal_info(self):
+		personal_area = Area.objects.create(area_type="personal")
+
+		self.client.post(
+			f'/cv/personal/add_item',
+			{'item_text[]': 'Mary', "type_": "personal", "item_type": 'Name'}
+		)
+
+		self.assertEqual(Item.objects.count(), 1)
+		item = Item.objects.first()
+		self.assertEqual(item.text, "Mary\n")
+
+		self.client.post(
+			f'/cv/personal/{item.pk}/delete/',
+		)
+
+		self.assertEqual(Item.objects.count(), 0)
 

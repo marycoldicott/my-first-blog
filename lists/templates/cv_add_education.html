@@ -1,16 +1,17 @@
 {% extends 'cv.html' %}
 {% block education %}
 	<h3 class="cursive">Education</h3>
+	{% if user.is_authenticated %}
 	{% if create %}
 		<form method="POST" action="/cv/education/create">
 			<input name="type_" value="education" class='hidden'/>{% csrf_token %}
 			{{ form.as_p}}
-			<button type="submit" class='custom-button'>Submit</button>
+			<button id="create-button" type="submit" class='custom-button'>Submit</button>
 		</form>
 	{% endif %}
 	<form method="POST" action="/cv/education/add_item">
 		<input name="type_" value="education" class="hidden"/>{% csrf_token %}
-		<select name="item_type" class="cv-drop-down">
+		<select id="education-type" name="item_type" class="cv-drop-down">
 			<option>School</option>
 			<option>College</option>
 			<option>University</option>
@@ -20,29 +21,30 @@
 		<br>
 		<label>Years Studied
 			<br>
-			<input name="item_text[]" placeholder="Enter years studied" class='short'/>{% csrf_token %}
+			<input id="years-input" name="item_text[]" placeholder="Enter years studied" class='short'/>{% csrf_token %}
 			{{ form.as_p}}
 		</label>
 		<br>
 		<label>Name of Institution
 			<br>
-			<input name="item_text[]" placeholder="Enter name of institution" class='medium'/>{% csrf_token %}
+			<input id="institution-input" name="item_text[]" placeholder="Enter name of institution" class='medium'/>{% csrf_token %}
 			{{ form.as_p}}
 		</label>
 		<br>
 		<label>Qualifications Gained
 			<br>
-			<input name="item_text[]" placeholder="Enter qualifications gained" class='long'/>{% csrf_token %}
+			<input id="qualifications-input" name="item_text[]" placeholder="Enter qualifications gained" class='long'/>{% csrf_token %}
 			{{ form.as_p}}
 		</label>
 		<br>
 		<label>Other
 			<br>
-			<input name="item_text[]" placeholder="Enter any other relevant details" class='long'/>{% csrf_token %}
+			<input id="other-input" name="item_text[]" placeholder="Enter any other relevant details" class='long'/>{% csrf_token %}
 			{{ form.as_p}}
 		</label>
-		<button type="submit" class='custom-button'>Submit</button>		
+		<button id="submit-button" type="submit" class='custom-button'>Submit</button>		
 	</form>
+	{% endif %}
 	<h4>Previously Entered</h4>
 	<table id="id_area_table">
 		{% for item in area.item_set.all %}

@@ -23,9 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '74wm37=pktcb(6_!y2a^59-c@r@i$5&b25-t4(#-mhs0blh7&6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 
 ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com', 'localhost']
+#ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -67,6 +70,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "django.template.context_processors.static",
             ],
         },
     },
